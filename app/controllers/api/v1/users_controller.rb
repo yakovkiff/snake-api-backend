@@ -7,7 +7,13 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def create
+  	user = User.create(user_params)
+  	render json: user
+  end
 
+  private
+  def user_params
+  	params.require(:users).permit(:name, :email)
   end
 
 end

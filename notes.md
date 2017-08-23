@@ -8,3 +8,8 @@ Plan of action (BackEnd):
 1. Routes
 2. Controllers
 3. Models
+
+
+Attributes needed for Games table
+1. User: user_id
+2. Tailsize : integer

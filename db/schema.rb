@@ -10,23 +10,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170821155855) do
+ActiveRecord::Schema.define(version: 20170823215448) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "games", force: :cascade do |t|
-    t.integer "user_id"
+    t.integer "frontend_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_games_on_user_id"
+  end
+
+  create_table "snake_heads", force: :cascade do |t|
+    t.string "bearing"
+    t.integer "x"
+    t.integer "y"
+    t.bigint "game_id"
+    t.index ["game_id"], name: "index_snake_heads_on_game_id"
+  end
+
+  create_table "tails", force: :cascade do |t|
+    t.string "bearing"
+    t.integer "x"
+    t.integer "y"
+    t.bigint "snake_head_id"
+    t.index ["snake_head_id"], name: "index_tails_on_snake_head_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.integer "games_played"
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "games", "users"
+  add_foreign_key "snake_heads", "games"
+  add_foreign_key "tails", "snake_heads"
 end

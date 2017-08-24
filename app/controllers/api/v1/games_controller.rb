@@ -6,8 +6,7 @@ class Api::V1::GamesController < ApplicationController
     render json: games
   end
 
-  def create
-    # actually create-or-update-game
+  def create_or_update_game
   	game = Game.find_by(frontend_id: game_params[:id])
     if game
       game.update(user_id: game_params[:user][:id], frontend_id: game_params[:id])
@@ -17,7 +16,8 @@ class Api::V1::GamesController < ApplicationController
       create_snake_head_and_tail(game)
     end
 
-    render json: game
+    render json: { game: game, snake_head: game.snake_head, tail: game.tails } 
+    # ask an instructor why we can't do game.snake_head.tails
   end
 
 
@@ -51,8 +51,8 @@ class Api::V1::GamesController < ApplicationController
     tail_array_of_hashes.each do |tail_hash|
       tail_block = Tail.new(snake_head_id: snake_head.id)
       tail_block.bearing = tail_hash[:bearing]
-      tail_block.x = tail_hash[:x]
-      tail_block.y = tail_hash[:y]
+      tail_block.x = tail_hash[:coordinates][0]
+      tail_block.y = tail_hash[:coordinates][1]
       tail_block.save
     end
   end

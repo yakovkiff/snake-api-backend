@@ -6,22 +6,25 @@ class Api::V1::GamesController < ApplicationController
     render json: games
   end
 
-  def create_or_update_game
+  def create
+    # actually create-or-update-game
   	game = Game.find_by(frontend_id: game_params[:id])
     if game
-      game.update(game_params)
+      game.update(user_id: game_params[:user][:id], frontend_id: game_params[:id])
       update_snake_head_and_tail(game)
     else
-      game = Game.create(game_params)
+      game = Game.create(user_id: game_params[:user][:id], frontend_id: game_params[:id])
       create_snake_head_and_tail(game)
     end
-    # remember to call private helper methods
 
     render json: game
   end
 
 
   private
+  def game_params
+  	params.require(:game).permit({:user => {}}, {:snakeCoordinatesAndBearing => {}}, :id)
+  end
 
   def create_snake_head_and_tail(game)
     snake_head = SnakeHead.new(game_id: game.id)
@@ -55,13 +58,10 @@ class Api::V1::GamesController < ApplicationController
   end
 
   def update_tail(snake_head)
-    snake_head.tail = []
+    snake_head.tails.clear
     snake_head.save
     create_tail(snake_head)
   end
 
-  def game_params
-  	params.require(:game).permit(:user, :snakeCoordinatesAndBearing, :id)
-  end
 
 end

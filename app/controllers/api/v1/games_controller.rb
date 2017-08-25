@@ -3,7 +3,7 @@ class Api::V1::GamesController < ApplicationController
   def index
 
     game = Game.first
-    byebug
+    # byebug
     render json: { game: game, snake_head: game.snake_head, tail: game.tails }
   end
 
@@ -13,6 +13,7 @@ class Api::V1::GamesController < ApplicationController
       game.update(user_id: game_params[:user][:id], frontend_id: game_params[:id])
       update_snake_head_and_tail(game)
     else
+      byebug
       game = Game.create(user_id: game_params[:user][:id], frontend_id: game_params[:id])
       create_snake_head_and_tail(game)
     end
@@ -49,7 +50,7 @@ class Api::V1::GamesController < ApplicationController
   def create_tail(snake_head)
     tail_array_of_hashes = game_params[:snakeCoordinatesAndBearing][:tail]
     tail_array_of_hashes.each do |tail_hash|
-      byebug
+      # byebug
       tail_block = Tail.new(snake_head_id: snake_head.id)
       tail_block.bearing = tail_hash[:bearing]
       tail_block.x = tail_hash[:coordinates][0]

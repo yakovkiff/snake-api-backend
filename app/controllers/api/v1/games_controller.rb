@@ -4,7 +4,7 @@ class Api::V1::GamesController < ApplicationController
 
     game = Game.first
     byebug
-    render json: { game: game, snake_head: game.snake_head, tail: game.snake_head.tails }
+    render json: { game: game, snake_head: game.snake_head, tail: game.tails }
   end
 
   def create_or_update_game

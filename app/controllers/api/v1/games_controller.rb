@@ -1,9 +1,8 @@
 class Api::V1::GamesController < ApplicationController
 
   def index
+    game = Game.first == nil ? Game.new : Game.first
 
-    game = Game.first
-    # byebug
     render json: { game: game, snake_head: game.snake_head, tail: game.tails }
   end
 
@@ -13,7 +12,6 @@ class Api::V1::GamesController < ApplicationController
       game.update(user_id: game_params[:user][:id], frontend_id: game_params[:id])
       update_snake_head_and_tail(game)
     else
-      byebug
       game = Game.create(user_id: game_params[:user][:id], frontend_id: game_params[:id])
       create_snake_head_and_tail(game)
     end

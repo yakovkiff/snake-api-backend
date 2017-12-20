@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users, only: [:index, :create]
- 	  post "/games", to: "games#create_or_update_game"
+ 	    post "/games", to: "games#create_or_update_game"
       resources :games, only: [:index]
 
     end

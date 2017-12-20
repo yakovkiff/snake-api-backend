@@ -50,7 +50,7 @@ class Api::V1::GamesController < ApplicationController
   def create_tail(snake_head)
     tail_array_of_hashes = params[:snakeCoordinatesAndBearing][:tail]
     tail_array_of_hashes.each do |tail_hash|
-      byebug
+      # byebug
       tail_block = Tail.new(snake_head_id: snake_head.id)
       tail_block.bearing = tail_hash[:bearing]
       tail_block.x = tail_hash[:coordinates][0]

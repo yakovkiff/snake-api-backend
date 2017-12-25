@@ -2,12 +2,11 @@ class Api::V1::GamesController < ApplicationController
 
   def index
     game = Game.last
-    byebug
-    render json: { game: game, snake_head: game.snake_head, tail: game.snake_head.tails }
+    render json: { game: game, snake_head: game.snake_head, tail: game.tails }
   end
 
   def create_or_update_game
-    byebug
+    
   	# game = Game.last
     # if game
       # game.update(user_id: params[:user][:id])

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170825041555) do
+ActiveRecord::Schema.define(version: 20171226222742) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,16 @@ ActiveRecord::Schema.define(version: 20170825041555) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_games_on_user_id"
+  end
+
+  create_table "moves", force: :cascade do |t|
+    t.string "bearing"
+    t.integer "x"
+    t.integer "y"
+    t.bigint "tail_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tail_id"], name: "index_moves_on_tail_id"
   end
 
   create_table "snake_heads", force: :cascade do |t|
@@ -48,6 +58,7 @@ ActiveRecord::Schema.define(version: 20170825041555) do
   end
 
   add_foreign_key "games", "users"
+  add_foreign_key "moves", "tails"
   add_foreign_key "snake_heads", "games"
   add_foreign_key "tails", "snake_heads"
 end

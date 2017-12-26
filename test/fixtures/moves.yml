@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  bearing: MyString
+  x: 1
+  'y': 1
+  tail: one
+
+two:
+  bearing: MyString
+  x: 1
+  'y': 1
+  tail: two

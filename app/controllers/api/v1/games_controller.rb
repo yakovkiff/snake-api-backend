@@ -2,11 +2,18 @@ class Api::V1::GamesController < ApplicationController
 
   def index
     game = Game.last
-    render json: { game: game, snake_head: game.snake_head, tail: game.tails }
+    tail = game.tails.map{|tail| {bearing: tail.bearing, coordinates: [tail.x, tail.y]}}
+    render json: {
+      snakeHead: {
+        bearing: game.snake_head.bearing,
+        coordinates: [game.snake_head.x, game.snake_head.y]
+      },
+      tail: tail
+    }
   end
 
   def create_or_update_game
-    
+
   	# game = Game.last
     # if game
       # game.update(user_id: params[:user][:id])

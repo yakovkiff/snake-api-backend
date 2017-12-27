@@ -2,19 +2,19 @@ class Api::V1::GamesController < ApplicationController
 
   def index
     game = Game.last
-    tail = game.tails.map{|tail|
-      moves = tail.moves.map{|move|
-        return {
+    tail = game.tails.map do |tail|
+      moves = tail.moves.map do |move|
+        {
           bearing: move.bearing,
           coordinates: [move.x, move.y]
         }
-      }
-      return {
+      end
+      {
         bearing: tail.bearing,
         coordinates: [tail.x, tail.y],
         moves: moves
       }
-    }
+    end
     render json: {
       snakeHead: {
         bearing: game.snake_head.bearing,
@@ -73,14 +73,14 @@ class Api::V1::GamesController < ApplicationController
       tail_block.bearing = tail_hash[:bearing]
       tail_block.x = tail_hash[:coordinates][0]
       tail_block.y = tail_hash[:coordinates][1]
-      create_moves(tail_block)
       tail_block.save
+      create_moves(tail_block, tail_hash)
     end
   end
 
-  def create_moves(tail_block)
-    tail_block.moves.each do |move|
-      Move.create(tail_id: tail_block.id, bearing: move[:bearing], x: move[:coordinates][0], y: move[:coordinates][1])
+  def create_moves(tail, tail_hash)
+    tail_hash[:moves].each do |move|
+      Move.create(tail_id: tail.id, bearing: move[:bearing], x: move[:coordinates][0], y: move[:coordinates][1])
     end
   end
 

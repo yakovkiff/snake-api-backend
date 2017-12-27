@@ -8,7 +8,8 @@ class Api::V1::GamesController < ApplicationController
           bearing: move.bearing,
           coordinates: [move.x, move.y]
         }
-      end
+      end.reverse
+      # the moves have been reversed somehow so this is to un-reverse them
       {
         bearing: tail.bearing,
         coordinates: [tail.x, tail.y],

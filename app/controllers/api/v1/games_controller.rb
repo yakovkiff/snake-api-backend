@@ -27,15 +27,9 @@ class Api::V1::GamesController < ApplicationController
 
   def create_or_update_game
 
-  	# game = Game.last
-    # if game
-      # game.update(user_id: params[:user][:id])
-      # update_snake_head_and_tail(game)
-    # else
-      # game = Game.create(user_id: params[:user][:id])
-      game = Game.create
-      create_snake_head_and_tail(game)
-    # end
+    game = Game.create
+    create_snake_head_and_tail(game)
+    byebug
     render json: { game: game, snake_head: game.snake_head, tail: game.tails }
     # why can't we do game.snake_head.tails
   end
@@ -53,18 +47,9 @@ class Api::V1::GamesController < ApplicationController
     snake_head.y = params[:snakeCoordinatesAndBearing][:snake][:coordinates][1]
     snake_head.save
     create_tail(snake_head)
+    create_moves(snake_head)
   end
 
-  # def update_snake_head_and_tail(game)
-  #   snake_head = game.snake_head
-  #   snake_head.bearing = params[:snakeCoordinatesAndBearing][:snake][:bearing]
-  #   snake_head.x = params[:snakeCoordinatesAndBearing][:snake][:coordinates][0]
-  #   snake_head.y = params[:snakeCoordinatesAndBearing][:snake][:coordinates][1]
-  #   snake_head.save
-  #   update_tail(snake_head)
-  # end
-
-  # {snake: snakeHead.coordinatesAndBearing(), tail: snakeHead.tailCoordinatesAndBearing()}
 
   def create_tail(snake_head)
     tail_array_of_hashes = params[:snakeCoordinatesAndBearing][:tail]
@@ -74,15 +59,20 @@ class Api::V1::GamesController < ApplicationController
       tail_block.bearing = tail_hash[:bearing]
       tail_block.x = tail_hash[:coordinates][0]
       tail_block.y = tail_hash[:coordinates][1]
+      tail_block.next_move_index = tail_hash[:nextMoveIndex]
       tail_block.save
-      create_moves(tail_block, tail_hash)
     end
   end
 
-  def create_moves(tail, tail_hash)
-    tail_hash[:moves].each do |move|
-      Move.create(tail_id: tail.id, bearing: move[:bearing], x: move[:coordinates][0], y: move[:coordinates][1])
-    end
+  def create_moves(snake_head)
+    moves = params[:snakeCoordinatesAndBearing][:moves]
+      moves.each do |move|
+        move_instance = Move.new(snake_head_id: snake_head.id)
+        move_instance.bearing = move[:bearing]
+        move_instance.x = move[:coordinates][0]
+        move_instance.y = move[:coordinates][1]
+        move_instance.save 
+      end
   end
 
   # def update_tail(snake_head)

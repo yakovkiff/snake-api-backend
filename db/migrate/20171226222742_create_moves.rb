@@ -4,7 +4,7 @@ class CreateMoves < ActiveRecord::Migration[5.1]
       t.string :bearing
       t.integer :x
       t.integer :y
-      t.belongs_to :tail, foreign_key: true
+      t.belongs_to :snake_head, foreign_key: true
 
       t.timestamps
     end

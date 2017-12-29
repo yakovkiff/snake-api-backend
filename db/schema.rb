@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171226222742) do
+ActiveRecord::Schema.define(version: 20171229173132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,10 +27,10 @@ ActiveRecord::Schema.define(version: 20171226222742) do
     t.string "bearing"
     t.integer "x"
     t.integer "y"
-    t.bigint "tail_id"
+    t.bigint "snake_head_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["tail_id"], name: "index_moves_on_tail_id"
+    t.index ["snake_head_id"], name: "index_moves_on_snake_head_id"
   end
 
   create_table "snake_heads", force: :cascade do |t|
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20171226222742) do
     t.integer "x"
     t.integer "y"
     t.bigint "snake_head_id"
+    t.integer "next_move_index"
     t.index ["snake_head_id"], name: "index_tails_on_snake_head_id"
   end
 
@@ -58,7 +59,7 @@ ActiveRecord::Schema.define(version: 20171226222742) do
   end
 
   add_foreign_key "games", "users"
-  add_foreign_key "moves", "tails"
+  add_foreign_key "moves", "snake_heads"
   add_foreign_key "snake_heads", "games"
   add_foreign_key "tails", "snake_heads"
 end

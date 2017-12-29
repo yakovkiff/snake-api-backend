@@ -1,5 +1,6 @@
 class SnakeHead < ApplicationRecord
 	has_many :tails
+	has_many :moves
 	belongs_to :game
 
 	# def bearing

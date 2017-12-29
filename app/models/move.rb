@@ -1,3 +1,3 @@
 class Move < ApplicationRecord
-  belongs_to :tail
+  belongs_to :snake_head
 end

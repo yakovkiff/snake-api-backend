@@ -29,7 +29,7 @@ class Api::V1::GamesController < ApplicationController
   end
 
   def create_or_update_game
-    user = User.create(name: userName)
+    user = User.create(name: params[:userName])
     game = Game.create(user_id: user.id)
     create_snake_head_and_tail(game)
     render json: { game: game, snake_head: game.snake_head, tail: game.tails }

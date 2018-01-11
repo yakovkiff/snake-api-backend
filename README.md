@@ -1,6 +1,6 @@
 # README
 
-Overview
+##Overview
 
 This is an API made to be used with snake-front-end. 
 
@@ -9,7 +9,8 @@ Once the user hits the 'save' button, the coordinates of the head and each tail 
 The food, however, appears as a new piece at random.
 
 
-Languages & tools
-Ruby on Rails (Ruby 2.3.1, Rails 5.1.3)
-PostgreSQL Database
+##Languages & tools
+
+- Ruby on Rails (Ruby 2.3.1, Rails 5.1.3)
+- PostgreSQL Database
 

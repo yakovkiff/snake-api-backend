@@ -1,7 +1,8 @@
 class Api::V1::GamesController < ApplicationController
 
   def index
-    game = Game.last
+    user = User.find_by(name: params[:username])
+    game = user.games.last
 
     moves = game.snake_head.moves.map do |move|
       {
@@ -29,7 +30,7 @@ class Api::V1::GamesController < ApplicationController
   end
 
   def create_or_update_game
-    user = User.create(name: params[:userName])
+    user = User.find_or_create_by(name: params[:userName])
     game = Game.create(user_id: user.id)
     create_snake_head_and_tail(game)
     render json: { game: game, snake_head: game.snake_head, tail: game.tails }

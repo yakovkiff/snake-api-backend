@@ -1,8 +1,9 @@
 class Api::V1::UsersController < ApplicationController
 
   def index
-    users = User.all
-    render json: users
+    users = User.all.select{|user| user.name.is_a? String}
+    usernames = users.map { |user|  user.name}
+    render json: usernames
   end
 
   # def create

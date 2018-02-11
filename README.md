@@ -1,24 +1,16 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Overview
 
-Things you may want to cover:
+This is an API made to be used with snake-front-end. 
 
-* Ruby version
+Once the user hits the 'save' button, the coordinates of the head and each tail piece, along with the relevant array of moves that each piece will encounter are sent to the back end. When the user presses 'resume saved game', the data are sent back to the front end to display the snake in the exact same place, heading in the same direction as it was when they saved. 
 
-* System dependencies
+The food, however, appears as a new piece at random.
 
-* Configuration
 
-* Database creation
+## Languages & tools
 
-* Database initialization
+- Ruby on Rails (Ruby 2.3.1, Rails 5.1.3)
+- PostgreSQL Database
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
